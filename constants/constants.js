@@ -1,0 +1,9 @@
+module.exports = {
+    UPLOAD_DIR: 'UPLOAD_DIR',
+    ADMIN_THEME: 'ADMIN_THEME',
+    LOGIN_THEME: 'LOGIN_THEME',
+    PUBLIC_THEME: 'PUBLIC_THEME',
+    ROOT_DIR: 'ROOT_DIR',
+    DOMAIN: 'DOMAIN',
+    SSL: 'SSL',
+};

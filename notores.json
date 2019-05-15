@@ -1,0 +1,21 @@
+{
+  "main": {
+    "login": {
+      "fields": [
+        "email"
+      ],
+      "saltRounds": 10
+    },
+    "jwt": {
+      "secretOrKey": "ADD_A_SECRET",
+      "issuer": "ADD_ISSUER",
+      "audience": "ADD_AUDIENCE"
+    }
+  },
+  "theme": {
+    "public": {
+      "name": "notores-demo",
+      "isApp": false
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "name": "@notores/template",
+  "version": "0.1.0",
+  "description": "Base Notores Template",
+  "main": "app.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "NODE_ENV=development nodemon --ignore './public' index.js",
+    "test": "NODE_ENV=test jest",
+    "lint": "eslint ./app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notores/template"
+  },
+  "authors": [
+    "Renzo Roso <renzo@geex.company>",
+    "Kevin Sijbers <kevin@aurop.net"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/notores/template/issues"
+  },
+  "homepage": "https://github.com/notores/template#readme",
+  "dependencies": {
+    "@notores/core": "notores/core",
+    "@notores/theme": "notores/theme",
+    "mongoose":"^5.5.8",
+    "client-sessions":"^0.8.0"
+  },
+  "notores": {
+    "modules": [
+      "@notores/theme",
+      {
+        "name": "notores-demo",
+        "absolutePath": ":root/app/notores-demo"
+      }
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "jest": "^24.1.0"
+  },
+  "jest": {
+    "automock": false,
+    "testEnvironment": "node",
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      ".idea",
+      "public"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "app/**/*.js",
+      "lib/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 5,
+        "lines": 40,
+        "functions": 25,
+        "statements": -1000
+      }
+    },
+    "setupFilesAfterEnv": [
+      "./setupJest.js"
+    ],
+    "coverageDirectory": "coverage"
+  }
+}
