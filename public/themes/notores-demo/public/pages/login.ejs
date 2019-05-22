@@ -1,0 +1,84 @@
+<% extend('layouts/main') %>
+
+<div class="row justify-content-md-center">
+    <form class="form-signin" id="login-form" _lpchecked="1">
+        <div class="text-center mb-4">
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+        </div>
+
+        <div class="form-label-group">
+            <input type="<%- config.main.authentication.usernameField === 'email' ? 'email' : 'text'%>" id="inputEmail" class="form-control" placeholder="Email address" required=""
+                   autofocus=""
+                   autocomplete="off">
+            <label for="inputEmail">Email address</label>
+        </div>
+
+        <div class="form-label-group">
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""
+                   autocomplete="off">
+            <label for="inputPassword">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <div class="container">
+            <div class="row">
+                <a class="btn btn-lg btn-outline-primary btn-block" href="/register">
+                    Register
+                </a>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </div>
+        </div>
+        <p class="mt-5 mb-3 text-muted text-center">© 2017-2019</p>
+    </form>
+</div>
+
+<script>
+    let isLoggingIn = false;
+
+
+    document.getElementById('login-form').addEventListener('submit', e => {
+        e.preventDefault();
+
+        if (isLoggingIn)
+            return;
+
+        isLoggingIn = true;
+
+        const body = {
+            <%- config.main.authentication.usernameField %>: document.getElementById('inputEmail').value,
+            password: document.getElementById('inputPassword').value,
+        };
+
+        fetch('../login', {
+            method: 'POST',
+            body: JSON.stringify(body),
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(res => res.json())
+            .then(body => {
+                if (body.user) {
+                    setToast('Login success', `Welcome ${body.user.email}!`);
+                    setTimeout(() => window.location.replace('/profile'), 2500)
+                } else {
+                    setToast('Login error', body.error);
+                }
+            })
+            .catch(error => {
+                console.log('fetch error', error);
+                setToast('Login error', 'Something went wrong, please try again later');
+            })
+            .finally(() => {
+                isLoggingIn = false;
+            });
+    });
+
+
+</script>

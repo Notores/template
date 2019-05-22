@@ -1,9 +1,7 @@
 {
   "main": {
-    "login": {
-      "fields": [
-        "email"
-      ],
+    "authentication": {
+      "usernameField": "email",
       "saltRounds": 10
     },
     "jwt": {

@@ -1,0 +1,127 @@
+<% extend('layouts/main') %>
+
+<div class="container">
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Profile</h1>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <hr>
+                    <form class="form row" id="update-profile-form">
+                        <div class="col-6">
+                            <div class="form-group">
+
+                                <label for="first_name"><h4>First name</h4></label>
+                                <input type="text" class="form-control" name="firstname" id="inputFirstname"
+                                       value="<%- user.firstname %>"
+                                       placeholder="first name" title="enter your first name if any.">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+
+                                <label for="last_name"><h4>Last name</h4></label>
+                                <input type="text" class="form-control" name="lastname" id="inputLastname"
+                                       placeholder="last name"
+                                        value="<%- user.lastname %>"
+                                       title="enter your last name if any.">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="email"><h4>Email</h4></label>
+                                <input type="email" class="form-control" name="email" id="inputEmail"
+                                       placeholder="you@email.com"
+                                       value="<%- user.email %>"
+                                       title="enter your email.">
+                            </div>
+                        </div>
+                        <div class="col-6">
+
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="password"><h4>Password</h4></label>
+                                <input type="password" class="form-control" name="password" id="inputPassword"
+                                       placeholder="password"
+                                       title="enter your password.">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="password2"><h4>Verify</h4></label>
+                                <input type="password" class="form-control" name="password2" id="inputRepeatPassword"
+                                       placeholder="password2" title="enter your password2.">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div class="row justify-content-md-center">
+                                    <div class="col-4">
+                                        <button class="btn btn-lg btn-success" type="submit" style="width:100%"><i
+                                                    class="glyphicon glyphicon-ok-sign"></i>
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr>
+                </div>
+            </div>
+
+        </div><!--/tab-pane-->
+    </div>
+</div>
+
+<script>
+    let isUpdatingInfo = false;
+
+
+    document.getElementById('update-profile-form').addEventListener('submit', e => {
+        e.preventDefault();
+
+        if (isUpdatingInfo)
+            return;
+
+        isUpdatingInfo = true;
+
+        const body = {
+            firstname: document.getElementById('inputFirstname').value,
+            lastname: document.getElementById('inputLastname').value,
+            email: document.getElementById('inputEmail').value,
+            password: document.getElementById('inputPassword').value,
+            repeatPassword: document.getElementById('inputRepeatPassword').value,
+        };
+
+        fetch('../user/<%- user.id %>', {
+            method: 'PATCH',
+            body: JSON.stringify(body),
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        })
+            .then(res => res.json())
+            .then(body => {
+                if (body.user) {
+                    setToast('Update success', 'Info updated');
+                    setTimeout(() => window.location.replace('/profile'), 2500)
+                } else {
+                    setToast('Update error', body.error);
+                }
+            })
+            .catch(error => {
+                console.log('fetch error', error);
+                setToast('Update error', 'Something went wrong, please try again later');
+            })
+            .finally(() => {
+                isUpdatingInfo = false;
+            });
+    });
+</script>

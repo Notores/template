@@ -25,8 +25,8 @@
   "dependencies": {
     "@notores/core": "notores/core",
     "@notores/theme": "notores/theme",
-    "mongoose":"^5.5.8",
-    "client-sessions":"^0.8.0"
+    "client-sessions": "^0.8.0",
+    "mongoose": "^5.5.8"
   },
   "notores": {
     "modules": [
@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.0.1",
     "eslint": "^5.14.1",
     "jest": "^24.1.0"
   },
