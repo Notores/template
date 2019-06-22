@@ -1,4 +1,3 @@
-require('./dotenv');
 const logger = require('@notores/core/logger')(module);
 
 logger.info('Starting app');
@@ -18,33 +17,13 @@ process.on('warning', (warning) => {
 // eslint-disable-next-line no-console
 console.table({...process.versions, ...{NODE_ENV: process.env.NODE_ENV}});
 
-(async function () {
-    const CONSTANTS = require("./constants/constants");
+require('dotenv').config();
+const server = require('@notores/core/server');
+const database = require('@notores/core/database');
+const ModuleHandler = require('@notores/core/ModuleHandler');
 
-    const server = require('@notores/core/server');
-    const database = require('@notores/core/database');
-
-    await database.connect();
-
-    server.createServer();
-
-    require('./Server')();
-
-    const ModuleHandler = require('@notores/core/ModuleHandler');
-    ModuleHandler.loadModules();
-
-    console.log('Modules');
-    console.table(ModuleHandler.getModulesList());
-
-    // TODO: Do something with the moduleloader
-
-    const {main} = server.getServers();
-
-    main.set(CONSTANTS.ROOT_DIR, __dirname);
-
-    main.set('view engine', 'ejs');
-    main.set('views', './public/themes');
-
-    server.startServer();
-})();
-
+database.connect()
+    .then(server.createServer)
+    .then(ModuleHandler.loadModules)
+    .then(() => console.table(ModuleHandler.getModulesList()))
+    .then(() => server.startServer(3000));

@@ -14,6 +14,9 @@
     "public": {
       "name": "notores-demo",
       "isApp": false
+    },
+    "private": {
+      "name": "notores-demo"
     }
   }
 }

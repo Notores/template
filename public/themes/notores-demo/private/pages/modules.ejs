@@ -1,0 +1,44 @@
+<% extend('../layout') %>
+
+<div class="page-header py-4 no-gutters row">
+    <div class="text-sm-left mb-3 text-center text-md-left mb-sm-0 col-12 col-sm-4"><span class="text-uppercase page-subtitle">Management</span>
+        <h3 class="page-title">Installed Modules</h3></div>
+</div>
+<div class="row">
+    <% body.modules.forEach(module => {
+        const moduleBits = module.name.split('/');
+        if(module.models.length > 0) { %>
+            <div class=" mb-4 col-6 col-sm-4 col-lg-3">
+                <div class="stats-small card card-small" style="cursor: pointer;">
+                    <div class="p-0 d-flex card-body">
+                        <div class="d-flex flex-column m-auto" style="width: 100%;">
+                            <div class="stats-small__data text-center" style="width: 100%; max-width: 100%; text-align: center;">
+                                <span class="stats-small__label text-uppercase"><%- (moduleBits.length > 1 ? moduleBits[0] : '&nbsp;') %></span>
+                                <h6 class="stats-small__value count my-3"><%- (moduleBits.length > 1 ? moduleBits[1] : module.name) %></h6>
+                            </div>
+                            <div class="stats-small__data" style="width: 100%; max-width: 100%; text-align: center;">
+                                <span class="stats-small__percentage" style="width: 100%; max-width: 100%; text-align: center; padding-left: 0px;">Manage Data</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <div class=" mb-4 col-6 col-sm-4 col-lg-3">
+                <div class="stats-small card card-small">
+                    <div class="p-0 d-flex card-body">
+                        <div class="d-flex flex-column m-auto" style="width: 100%;">
+                            <div class="stats-small__data text-center" style="width: 100%; max-width: 100%; text-align: center;">
+                                <span class="stats-small__label text-uppercase"><%- (moduleBits.length > 1 ? moduleBits[0] : '&nbsp;') %></span>
+                                <h6 class="stats-small__value count my-3" style="color: rgba(61, 81, 112, 0.5);"><%- (moduleBits.length > 1 ? moduleBits[1] : module.name) %></h6>
+                            </div>
+                            <div class="stats-small__data" style="width: 100%; max-width: 100%; text-align: center;">
+                                <span class="stats-small__percentage" style="width: 100%; max-width: 100%; text-align: center; padding-left: 0px;">No management options</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    <% }) %>
+</div>
