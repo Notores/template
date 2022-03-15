@@ -27,7 +27,7 @@
     "@notores/theme": "notores/theme",
     "@webcomponents/webcomponentsjs": "^2.2.10",
     "client-sessions": "^0.8.0",
-    "lodash-es": "^4.17.11",
+    "lodash-es": "^4.17.21",
     "mongoose": "^5.5.8",
     "redux": "^4.0.1"
   },
